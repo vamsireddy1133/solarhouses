@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const Counter = ({ value, suffix = "", decimals = 0 }) => {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-100px" });
+    const inView = useInView(ref, { once: true, margin: "-10px" });
     const count = useMotionValue(0);
     const rounded = useTransform(count, (latest) => {
         return latest.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
