@@ -30,8 +30,8 @@ const Navbar = () => {
         <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-brand-green-dark/90 backdrop-blur-lg py-4 shadow-xl' : 'bg-transparent py-6'}`}>
             <div className="container-custom flex justify-between items-center">
                 <Link to="/" className="flex items-center group">
-                    <div className="bg-white/95 p-1 md:p-1.5 rounded-lg md:rounded-xl shadow-2xl group-hover:bg-white transition-all duration-300">
-                        <img src="/logo.png" alt="Solar House Logo" className="h-8 md:h-12 w-auto" />
+                    <div className="bg-white/95 p-1 md:p-1 rounded-lg md:rounded-xl shadow-2xl group-hover:bg-white transition-all duration-300">
+                        <img src="/logo.png" alt="Solar House Logo" className="h-12 md:h-16 w-auto" />
                     </div>
                 </Link>
 
