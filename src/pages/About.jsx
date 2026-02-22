@@ -11,7 +11,6 @@ const About = () => {
         {
             name: "N Vani",
             role: "Managing Director",
-            mobile: "9154348182",
             image: "/team/vani.jpg",
         },
         {
@@ -22,7 +21,6 @@ const About = () => {
         {
             name: "Anil Kumar",
             role: "Technical Team Head",
-            mobile: "93904 87001",
             image: "/team/anil.jpg",
         },
         {
@@ -38,7 +36,6 @@ const About = () => {
         {
             name: "Shiva",
             role: "Business Development Manager",
-            mobile: "9030747547",
             image: "/team/shiva.jpg",
         },
     ];
@@ -57,9 +54,8 @@ const About = () => {
                         >
                             <div className="mb-12">
                                 <span className="text-brand-yellow font-bold uppercase tracking-[0.4em] text-[10px] inline-block mb-8 border-l-2 border-brand-yellow pl-4">Since 2020</span>
-                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-serif font-black leading-[0.85] text-white uppercase mb-8">
-                                    Decarbonizing <br />
-                                    <span className="text-brand-yellow">India.</span>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-black leading-tight text-white uppercase mb-8 tracking-tight whitespace-nowrap">
+                                    Decarbonizing <span className="text-brand-yellow">India.</span>
                                 </h2>
                                 <p className="text-white/40 text-xl font-light tracking-tight border-l border-white/10 pl-6">
                                     One rooftop at a time.
@@ -142,14 +138,6 @@ const About = () => {
                                 </div>
                                 <h3 className="text-xl font-bold mb-1">{member.name}</h3>
                                 <p className="text-brand-yellow text-sm uppercase tracking-widest font-bold mb-2">{member.role}</p>
-                                {member.mobile && (
-                                    <div className="flex items-center text-white/50 text-xs">
-                                        <div className="w-6 h-6 bg-white/5 rounded-full flex items-center justify-center mr-2 text-brand-yellow">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.11-2.11a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                                        </div>
-                                        {member.mobile}
-                                    </div>
-                                )}
                             </motion.div>
                         ))}
                     </div>
