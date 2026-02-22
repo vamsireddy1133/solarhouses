@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring, useTransform, useInView, animate } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useInView, animate, useScroll } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import {
     ArrowRight, Zap, Shield, Battery, TrendingUp, Sun, ChevronRight,
@@ -35,29 +35,118 @@ const Home = () => {
             opacity: 1,
             transition: {
                 staggerChildren: 0.2,
+                delayChildren: 0.3
             },
         },
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, scale: 0.8, y: 50 },
         visible: {
             opacity: 1,
+            scale: 1,
             y: 0,
-            transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                duration: 0.8
+            },
         },
     };
 
+    const floatingVariants = {
+        animate: {
+            y: [0, -20, 0],
+            rotate: [0, 5, -5, 0],
+            transition: {
+                duration: 6,
+                repeat: Infinity,
+                ease: "linear"
+            }
+        }
+    };
+
+    const { scrollYProgress } = useScroll();
+    const scrollYSpring = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
+
+    const heroY = useTransform(scrollYProgress, [0, 0.5], [0, 200]);
+    const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
+    // Split text animation for hero title
+    const titleText = "The Future of Energy is Here.";
+    const titleWords = titleText.split(" ");
+
+    // Magnetic Button Hook replacement logic
+    const MouseTracker = (ref) => {
+        const x = useMotionValue(0);
+        const y = useMotionValue(0);
+        const springX = useSpring(x, { stiffness: 150, damping: 15 });
+        const springY = useSpring(y, { stiffness: 150, damping: 15 });
+
+        const handleMouseMove = (e) => {
+            const rect = ref.current.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            x.set((e.clientX - centerX) * 0.3);
+            y.set((e.clientY - centerY) * 0.3);
+        };
+
+        const handleMouseLeave = () => {
+            x.set(0);
+            y.set(0);
+        };
+
+        return { x: springX, y: springY, handleMouseMove, handleMouseLeave };
+    };
+
+    const btnRef1 = useRef(null);
+    const magnetic1 = MouseTracker(btnRef1);
+    const btnRef2 = useRef(null);
     return (
         <div className="overflow-hidden" id="home">
+            {/* Scroll Progress Bar */}
+            <motion.div
+                className="fixed top-0 left-0 right-0 h-1 bg-brand-yellow z-[60] origin-left"
+                style={{ scaleX: scrollYSpring }}
+            />
             {/* Hero Section */}
-            <section className="relative h-auto md:min-h-screen flex items-center pt-32 pb-8 md:pt-20 md:pb-0">
+            <section className="relative h-auto md:min-h-screen flex items-center pt-32 pb-8 md:pt-20 md:pb-0 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-brand-green-dark via-brand-green-dark/80 to-transparent z-10" />
-                <div className="absolute inset-0 z-0">
+                <motion.div
+                    style={{ y: heroY, opacity: heroOpacity }}
+                    className="absolute inset-0 z-0"
+                >
                     <img
                         src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop"
                         alt="Solar Installation"
-                        className="w-full h-full object-cover opacity-60"
+                        className="w-full h-full object-cover"
+                    />
+                </motion.div>
+
+                {/* Animated decorative shapes */}
+                <div className="absolute inset-0 pointer-events-none z-10">
+                    <motion.div
+                        animate={{
+                            x: [0, 100, 0],
+                            y: [0, 50, 0],
+                            scale: [1, 1.2, 1]
+                        }}
+                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-yellow/10 rounded-full blur-[100px]"
+                    />
+                    <motion.div
+                        animate={{
+                            x: [0, -100, 0],
+                            y: [0, -50, 0],
+                            scale: [1, 1.5, 1]
+                        }}
+                        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                        className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-green-light/10 rounded-full blur-[120px]"
                     />
                 </div>
 
@@ -69,10 +158,18 @@ const Home = () => {
                         className="max-w-3xl"
                     >
                         <motion.h1
-                            variants={itemVariants}
+                            variants={containerVariants}
                             className="text-4xl sm:text-6xl md:text-8xl font-serif font-black leading-tight mb-8"
                         >
-                            The Future of <span className="text-brand-yellow">Energy</span> is Here.
+                            {titleWords.map((word, i) => (
+                                <motion.span
+                                    key={i}
+                                    variants={itemVariants}
+                                    className="inline-block mr-4 font-serif"
+                                >
+                                    {word === "Energy" ? <span className="text-brand-yellow">{word}</span> : word}
+                                </motion.span>
+                            ))}
                         </motion.h1>
                         <motion.p
                             variants={itemVariants}
@@ -81,12 +178,26 @@ const Home = () => {
                             Premium solar solutions designed for the modern Indian home and enterprise. Power your life with elegance and efficiency.
                         </motion.p>
                         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full max-w-sm sm:max-w-none">
-                            <a href="#portfolio" className="btn-primary group w-full sm:w-auto">
-                                View Projects <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                            </a>
-                            <a href="#about" className="btn-secondary w-full sm:w-auto">
-                                Our Story
-                            </a>
+                            <motion.div
+                                ref={btnRef1}
+                                style={{ x: magnetic1.x, y: magnetic1.y }}
+                                onMouseMove={magnetic1.handleMouseMove}
+                                onMouseLeave={magnetic1.handleMouseLeave}
+                            >
+                                <a href="#portfolio" className="btn-primary group w-full sm:w-auto flex items-center justify-center">
+                                    View Projects <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                                </a>
+                            </motion.div>
+                            <motion.div
+                                ref={btnRef2}
+                                style={{ x: magnetic2.x, y: magnetic2.y }}
+                                onMouseMove={magnetic2.handleMouseMove}
+                                onMouseLeave={magnetic2.handleMouseLeave}
+                            >
+                                <a href="#about" className="btn-secondary w-full sm:w-auto flex items-center justify-center">
+                                    Our Story
+                                </a>
+                            </motion.div>
                         </motion.div>
                     </motion.div>
                 </div>
@@ -134,12 +245,27 @@ const Home = () => {
                                 viewport={{ once: true }}
                                 className="glass-card text-center relative group"
                             >
-                                <div className="w-16 h-16 bg-brand-yellow/10 rounded-2xl flex items-center justify-center text-brand-yellow mx-auto mb-6 group-hover:bg-brand-yellow group-hover:text-brand-green-dark transition-all duration-500">
+                                <motion.div
+                                    whileHover={{
+                                        y: -15,
+                                        scale: 1.02,
+                                        boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
+                                    }}
+                                    className="w-16 h-16 bg-brand-yellow/10 rounded-2xl flex items-center justify-center text-brand-yellow mx-auto mb-6 transition-colors duration-500 group-hover:bg-brand-yellow group-hover:text-brand-green-dark"
+                                >
                                     <step.icon size={30} />
-                                </div>
+                                </motion.div>
                                 <h3 className="text-xl font-bold mb-4">{step.title}</h3>
                                 <p className="text-white/50 text-sm leading-relaxed">{step.desc}</p>
-                                {i < 3 && <ChevronRight className="hidden md:block absolute -right-6 top-1/2 -translate-y-1/2 text-white/10" size={32} />}
+                                {i < 3 && (
+                                    <motion.div
+                                        animate={{ x: [0, 10, 0] }}
+                                        transition={{ duration: 2, repeat: Infinity }}
+                                        className="hidden md:block absolute -right-6 top-1/2 -translate-y-1/2 text-white/10"
+                                    >
+                                        <ChevronRight size={32} />
+                                    </motion.div>
+                                )}
                             </motion.div>
                         ))}
                     </div>
@@ -294,19 +420,28 @@ const Home = () => {
                                 viewport={{ once: true }}
                                 className="group"
                             >
-                                <div className="glass-card bg-[#0a110d] border-white/5 p-6 md:p-10 rounded-[2.5rem] hover:border-brand-yellow/30 transition-all duration-700 overflow-hidden relative">
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                    className="glass-card bg-[#0a110d] border-white/5 p-6 md:p-10 rounded-[2.5rem] hover:border-brand-yellow/30 transition-all duration-700 overflow-hidden relative shadow-2xl"
+                                >
                                     <div className="aspect-[4/3] rounded-3xl overflow-hidden mb-10 relative bg-white/5">
-                                        <img
+                                        <motion.img
+                                            whileHover={{ scale: 1.15 }}
+                                            transition={{ duration: 0.8 }}
                                             src={kit.image}
                                             alt={kit.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80 group-hover:opacity-100"
+                                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0a110d] via-transparent to-transparent opacity-60" />
 
                                         {/* Floating Badge */}
-                                        <div className="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/40 group-hover:bg-brand-yellow group-hover:text-brand-green-dark group-hover:border-brand-yellow transition-all duration-500 cursor-pointer">
+                                        <motion.div
+                                            whileHover={{ rotate: 90, scale: 1.1 }}
+                                            className="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/40 group-hover:bg-brand-yellow group-hover:text-brand-green-dark group-hover:border-brand-yellow transition-all duration-500 cursor-pointer backdrop-blur-md"
+                                        >
                                             <Plus size={20} />
-                                        </div>
+                                        </motion.div>
                                     </div>
 
                                     <div className="space-y-6">
@@ -317,14 +452,24 @@ const Home = () => {
                                             </div>
                                         </div>
 
-                                        <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/5">
+                                        <motion.div
+                                            variants={containerVariants}
+                                            initial="hidden"
+                                            whileInView="visible"
+                                            viewport={{ once: true }}
+                                            className="grid grid-cols-2 gap-4 pt-6 border-t border-white/5"
+                                        >
                                             {kit.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-white/30">
+                                                <motion.div
+                                                    key={idx}
+                                                    variants={itemVariants}
+                                                    className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-white/30"
+                                                >
                                                     <div className="w-1.5 h-1.5 rounded-full bg-brand-yellow/40" />
                                                     {feature}
-                                                </div>
+                                                </motion.div>
                                             ))}
-                                        </div>
+                                        </motion.div>
 
                                         <div className="pt-8">
                                             <button className="flex items-center gap-4 text-brand-green-light font-black uppercase tracking-[0.2em] text-sm group/btn">
@@ -338,7 +483,7 @@ const Home = () => {
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             </motion.div>
                         ))}
                     </div>
@@ -1155,7 +1300,13 @@ const Home = () => {
                         <p className="text-white/60">Explore our diverse range of successful solar transitions across India.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                    >
                         {[
                             { title: "The Green Mansion", location: "Gurugram, HR", category: "Residential", image: "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=1974&auto=format&fit=crop", capacity: "15kW" },
                             { title: "Tech Plaza Industrial", location: "Pune, MH", category: "Commercial", image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop", capacity: "250kW" },
@@ -1166,26 +1317,35 @@ const Home = () => {
                         ].map((project, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: i * 0.1, duration: 0.6 }}
-                                viewport={{ once: true }}
+                                variants={itemVariants}
+                                whileHover={{
+                                    y: -10,
+                                    rotateX: -5,
+                                    rotateY: 5,
+                                    perspective: 1000
+                                }}
                                 className="group relative"
                             >
-                                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
-                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-brand-green-dark via-transparent to-transparent opacity-80" />
-                                    <div className="absolute bottom-6 left-6 right-6">
+                                <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-white/5">
+                                    <motion.img
+                                        whileHover={{ scale: 1.2 }}
+                                        transition={{ duration: 1 }}
+                                        src={project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover transition-all duration-700"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-brand-green-dark via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+                                    <div className="absolute bottom-6 left-6 right-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                                         <div className="flex justify-between items-end">
                                             <div>
-                                                <span className="text-brand-yellow text-[10px] font-black uppercase tracking-widest mb-2 block">{project.category}</span>
-                                                <h3 className="text-xl font-bold text-white mb-1">{project.title}</h3>
+                                                <span className="text-brand-yellow text-[10px] font-black uppercase tracking-widest mb-2 block bg-brand-yellow/10 px-2 py-0.5 rounded-full w-fit">{project.category}</span>
+                                                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-brand-yellow transition-colors">{project.title}</h3>
                                                 <div className="flex items-center text-white/50 text-xs">
                                                     <MapPin size={12} className="mr-1 text-brand-yellow" />
                                                     {project.location}
                                                 </div>
                                             </div>
-                                            <div className="bg-brand-yellow text-brand-green-dark px-3 py-1 rounded-lg text-sm font-black">
+                                            <div className="bg-brand-yellow/10 backdrop-blur-md text-brand-yellow border border-brand-yellow/20 px-3 py-1 rounded-lg text-sm font-black group-hover:bg-brand-yellow group-hover:text-brand-green-dark transition-all duration-300">
                                                 {project.capacity}
                                             </div>
                                         </div>
@@ -1193,7 +1353,7 @@ const Home = () => {
                                 </div>
                             </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -1201,7 +1361,13 @@ const Home = () => {
             <section className="py-16 md:py-32 bg-brand-green-dark overflow-hidden relative">
                 <div className="container-custom relative z-10 text-center">
                     <h2 className="text-4xl md:text-5xl font-black mb-20">Our Collective <span className="text-brand-yellow">Impact.</span></h2>
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="grid grid-cols-2 lg:grid-cols-4 gap-12"
+                    >
                         {[
                             { label: "Carbon Saved", value: 250, suffix: "k Tons", icon: CloudSun },
                             { label: "Trees Planted", value: 1.2, suffix: "M", decimals: 1, icon: Target },
@@ -1222,7 +1388,7 @@ const Home = () => {
                                 <p className="text-white/40 text-sm uppercase tracking-widest font-bold">{stat.label}</p>
                             </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
                 {/* Animated Background Line */}
                 <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-yellow/20 to-transparent -translate-y-1/2" />
@@ -1268,7 +1434,7 @@ const Home = () => {
                 {/* Glassmorphism Decorative Elements */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-brand-yellow/5 blur-[100px] rounded-full -mr-48 -mt-48" />
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-yellow/5 blur-[100px] rounded-full -ml-48 -mb-48" />
-            </section>
+            </section >
             {/* Solar Panel Cleaning Procedure */}
             <section className="py-16 md:py-32 bg-brand-green-dark border-t border-white/5">
                 <div className="container-custom">
@@ -1317,7 +1483,7 @@ const Home = () => {
                         </a>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* Contact Section */}
             <section id="contact" className="py-16 md:py-32 bg-brand-green-dark">
@@ -1361,7 +1527,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-        </div >
+        </div>
     );
 };
 
