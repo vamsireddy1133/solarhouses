@@ -17,12 +17,14 @@ const Navbar = () => {
     }, []);
 
     const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'About', path: '/about' },
-        { name: 'Services', path: '/services' },
-        { name: 'Projects', path: '/portfolio' },
-        { name: 'Contact', path: '/contact' },
+        { name: 'Home', path: '/', id: 'home' },
+        { name: 'About', path: '/about', id: 'about' },
+        { name: 'Services', path: '/services', id: 'services' },
+        { name: 'Projects', path: '/portfolio', id: 'portfolio' },
+        { name: 'Contact', path: '/contact', id: 'contact' },
     ];
+
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
 
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-brand-green-dark/90 backdrop-blur-lg py-4 shadow-xl' : 'bg-transparent py-6'}`}>
@@ -66,18 +68,18 @@ const Navbar = () => {
                     >
                         <div className="container-custom py-6 flex flex-col space-y-4">
                             {navLinks.map((link) => (
-                                <Link
+                                <a
                                     key={link.name}
-                                    to={link.path}
+                                    href={`/#${link.id}`}
                                     onClick={() => setIsOpen(false)}
-                                    className={`text-lg font-bold transition-colors ${location.pathname === link.path ? 'text-brand-yellow' : 'text-white'}`}
+                                    className={`text-lg font-bold transition-colors ${location.pathname === '/' && location.hash === `#${link.id}` ? 'text-brand-yellow' : 'text-white'}`}
                                 >
                                     {link.name}
-                                </Link>
+                                </a>
                             ))}
-                            <Link to="/contact" onClick={() => setIsOpen(false)} className="btn-primary w-full text-center">
+                            <a href="/#contact" onClick={() => setIsOpen(false)} className="btn-primary w-full text-center">
                                 Get a Quote
-                            </Link>
+                            </a>
                         </div>
                     </motion.div>
                 )}
@@ -134,7 +136,7 @@ const Footer = () => {
                         <ul className="space-y-4">
                             <li className="flex items-start space-x-3 text-white/60">
                                 <MapPin className="text-brand-yellow shrink-0" size={20} />
-                                <span>Plot No -56, Road No- 5, Cherlapally, Hyderabad, 500051 (3rd Floor)</span>
+                                <span>Plot No -56, Road No- 5, Cherlapally, Hyderabad, 500051</span>
                             </li>
                             <li className="flex items-center space-x-3 text-white/60">
                                 <Phone className="text-brand-yellow shrink-0" size={20} />

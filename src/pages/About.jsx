@@ -55,8 +55,16 @@ const About = () => {
                             transition={{ duration: 0.8 }}
                             viewport={{ once: true }}
                         >
-                            <span className="text-brand-yellow font-black uppercase tracking-widest text-sm inline-block mb-4">Our Mission</span>
-                            <h2 className="text-5xl md:text-6xl font-black mb-10 leading-tight">Decarbonizing India, <br />One <span className="text-brand-yellow">Rooftop</span> at a Time.</h2>
+                            <div className="mb-12">
+                                <span className="text-brand-yellow font-bold uppercase tracking-[0.4em] text-[10px] inline-block mb-8 border-l-2 border-brand-yellow pl-4">Since 2020</span>
+                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-serif font-black leading-[0.85] text-white uppercase mb-8">
+                                    Decarbonizing <br />
+                                    <span className="text-brand-yellow">India.</span>
+                                </h2>
+                                <p className="text-white/40 text-xl font-light tracking-tight border-l border-white/10 pl-6">
+                                    One rooftop at a time.
+                                </p>
+                            </div>
                             <p className="text-white/60 text-lg leading-relaxed mb-8">
                                 Founded in 2020, Solar House was born from a simple yet ambitious vision: to make premium sustainable energy accessible to every Indian household and enterprise.
                             </p>
@@ -72,11 +80,11 @@ const About = () => {
                             viewport={{ once: true }}
                             className="relative"
                         >
-                            <div className="aspect-square rounded-3xl overflow-hidden border-2 border-brand-yellow/20">
+                            <div className="aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden border-2 border-brand-yellow/20">
                                 <img
                                     src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop"
                                     alt="Solar Team at work"
-                                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                                    className="w-full h-full object-cover transition-all duration-700"
                                 />
                             </div>
                             {/* Decorative elements */}
@@ -128,9 +136,9 @@ const About = () => {
                                     <img
                                         src={member.image}
                                         alt={member.name}
-                                        className="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                                        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-brand-green-dark/20 group-hover:bg-transparent transition-all" />
+                                    {/* Removed dark overlay */}
                                 </div>
                                 <h3 className="text-xl font-bold mb-1">{member.name}</h3>
                                 <p className="text-brand-yellow text-sm uppercase tracking-widest font-bold mb-2">{member.role}</p>

@@ -157,7 +157,7 @@ const Contact = () => {
             </section>
 
             {/* Map Placeholder */}
-            <section className="container-custom mt-32 h-[450px] rounded-3xl overflow-hidden grayscale opacity-50 border border-white/10">
+            <section className="container-custom mt-32 h-[450px] rounded-3xl overflow-hidden opacity-80 border border-white/10">
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112173.07222530113!2d77.01423854999999!3d28.5274152!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19d582e38859%3A0x2cf5e3482d799b92!2sGurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                     width="100%"

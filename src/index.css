@@ -6,12 +6,16 @@
   --color-brand-green-light: #059669;
   --color-brand-yellow: #FDE047;
   --color-brand-yellow-dark: #EAB308;
-  
+
   --font-sans: "Inter", system-ui, sans-serif;
   --font-serif: "Outfit", serif;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-brand-green-dark text-white font-sans antialiased;
   }
@@ -19,13 +23,13 @@
 
 @layer components {
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-6 sm:px-6 lg:px-8;
   }
-  
+
   .btn-primary {
     @apply inline-flex items-center justify-center px-8 py-3 rounded-full bg-brand-yellow text-brand-green-dark font-bold transition-all hover:bg-white hover:scale-105 active:scale-95;
   }
-  
+
   .btn-secondary {
     @apply inline-flex items-center justify-center px-8 py-3 rounded-full border-2 border-brand-yellow text-brand-yellow font-bold transition-all hover:bg-brand-yellow hover:text-brand-green-dark hover:scale-105 active:scale-95;
   }
