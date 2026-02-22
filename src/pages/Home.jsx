@@ -107,6 +107,8 @@ const Home = () => {
     const btnRef1 = useRef(null);
     const magnetic1 = MouseTracker(btnRef1);
     const btnRef2 = useRef(null);
+    const magnetic2 = MouseTracker(btnRef2);
+
     return (
         <div className="overflow-hidden" id="home">
             {/* Scroll Progress Bar */}
