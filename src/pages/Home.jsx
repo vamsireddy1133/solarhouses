@@ -1202,8 +1202,8 @@ const Home = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                     >
                         {[
-                            { title: "The Green Mansion", location: "Gurugram, HR", category: "Residential", image: "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=1974&auto=format&fit=crop", capacity: "15kW" },
-                            { title: "Tech Plaza Industrial", location: "Pune, MH", category: "Commercial", image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop", capacity: "250kW" },
+                            { title: "The Green Mansion", location: "Gurugram, HR", category: "Residential", image: "https://images.unsplash.com/photo-1592833159155-c62df1b356ee?q=80&w=2070&auto=format&fit=crop", capacity: "15kW" },
+                            { title: "Tech Plaza Industrial", location: "Pune, MH", category: "Commercial", image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1974&auto=format&fit=crop", capacity: "250kW" },
                             { title: "Skyline Apartments", location: "Bengaluru, KA", category: "Housing Society", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop", capacity: "50kW" },
                             { title: "Eco Warehouse", location: "Ahmedabad, GJ", category: "Industrial", image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop", capacity: "1.2MW" },
                             { title: "Royal Residency", location: "Jaipur, RJ", category: "Residential", image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop", capacity: "8kW" },
