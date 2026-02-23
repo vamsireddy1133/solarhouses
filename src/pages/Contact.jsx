@@ -39,7 +39,7 @@ const Contact = () => {
                         <div className="space-y-8">
                             {[
                                 { icon: Phone, label: "Call Us", val: "+91 91821 32523" },
-                                { icon: Mail, label: "Email Support", val: "consult@solarhouse.in" },
+                                { icon: Mail, label: "Email Support", val: "consult@solarhouses.in" },
                                 { icon: MapPin, label: "Office Address", val: "Plot No -56, Rd No 5, Cherlapally, Hyderabad" },
                                 { icon: Clock, label: "Business Hours", val: "Mon - Sat: 9:00 AM - 7:00 PM" }
                             ].map((item, i) => (
