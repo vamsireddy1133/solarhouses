@@ -295,7 +295,7 @@ const Home = () => {
                                 id: 1,
                                 title: "Kit 1: Without Wires",
                                 desc: "Standard component bundle for custom wiring projects.",
-                                image: "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=1974&auto=format&fit=crop",
+                                image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop",
                                 features: ["Tier-1 Mono Perc Panels", "Smart String Inverter", "AC/DC Distribution Box", "Earthing Rods & Gel"]
                             },
                             {
