@@ -78,7 +78,7 @@ const About = () => {
                         >
                             <div className="aspect-[4/3] md:aspect-square rounded-3xl overflow-hidden border-2 border-brand-yellow/20">
                                 <img
-                                    src="https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop"
+                                    src="https://images.unsplash.com/photo-1542332213-31f873480de3?q=80&w=2072&auto=format&fit=crop"
                                     alt="Solar Team at work"
                                     className="w-full h-full object-cover transition-all duration-700"
                                 />
