@@ -24,7 +24,7 @@ const Portfolio = () => {
             title: "Skyline Apartments",
             location: "Bengaluru, KA",
             category: "Housing Society",
-            image: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80&w=1974&auto=format&fit=crop",
+            image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop",
             capacity: "50kW"
         },
         {
@@ -45,7 +45,7 @@ const Portfolio = () => {
             title: "Global Logistics Hub",
             location: "Chennai, TN",
             category: "Industrial",
-            image: "https://images.unsplash.com/photo-1542332213-31f873480de3?q=80&w=2072&auto=format&fit=crop",
+            image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop",
             capacity: "800kW"
         }
     ];
