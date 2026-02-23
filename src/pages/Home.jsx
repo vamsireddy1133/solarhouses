@@ -295,14 +295,14 @@ const Home = () => {
                                 id: 1,
                                 title: "Kit 1: Without Wires",
                                 desc: "Standard component bundle for custom wiring projects.",
-                                image: "https://images.unsplash.com/photo-1591267990532-e5bdb1b0ceb8?q=80&w=2027&auto=format&fit=crop",
+                                image: "https://images.unsplash.com/photo-1611365892117-00ac5ef43b90?q=80&w=2070&auto=format&fit=crop",
                                 features: ["Tier-1 Mono Perc Panels", "Smart String Inverter", "AC/DC Distribution Box", "Earthing Rods & Gel"]
                             },
                             {
                                 id: 2,
                                 title: "Kit 2: With Wires",
                                 desc: "Full end-to-end kit including precut solar wiring.",
-                                image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop",
+                                image: "https://images.unsplash.com/photo-1594819047050-99defca82545?q=80&w=2070&auto=format&fit=crop",
                                 features: ["Everything in Kit 1", "DC Solar Cables (4sq mm)", "MC4 Pre-crimped Connectors", "Earth Wire Bundles"]
                             }
                         ].map((kit, i) => (
