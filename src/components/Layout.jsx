@@ -46,7 +46,7 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    <Link to="/contact" className="btn-primary py-2 px-6 text-sm">
+                    <Link to="/login" className="btn-primary py-2 px-6 text-sm">
                         Get a Quote
                     </Link>
                 </div>
@@ -77,9 +77,9 @@ const Navbar = () => {
                                     {link.name}
                                 </a>
                             ))}
-                            <a href="/#contact" onClick={() => setIsOpen(false)} className="btn-primary w-full text-center">
+                            <Link to="/login" onClick={() => setIsOpen(false)} className="btn-primary w-full text-center">
                                 Get a Quote
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
                 )}
