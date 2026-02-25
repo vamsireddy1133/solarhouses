@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, FileText, CheckCircle2, Plus, Trash2, Printer, Edit3 } from 'lucide-react';
+import { Download, FileText, CheckCircle2, Plus, Trash2, Printer, Edit3, LogOut } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 
 // Utility to convert number to Indian currency words
@@ -130,6 +131,12 @@ const Quotation = () => {
     });
 
     const [isDownloading, setIsDownloading] = useState(false);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('isAuthenticated');
+        navigate('/login');
+    };
 
     useEffect(() => {
         // Calculate taxable amount from sum of items
@@ -267,6 +274,12 @@ const Quotation = () => {
                             style={{ backgroundColor: '#facc15', color: '#000000' }}
                         >
                             <Download size={18} /> Download PDF
+                        </button>
+                        <button
+                            onClick={handleLogout}
+                            className="bg-red-500/10 text-red-500 px-5 py-3 rounded-xl font-bold flex items-center gap-2 border border-red-500/20 transition-all hover:bg-red-500/20"
+                        >
+                            <LogOut size={18} /> Logout
                         </button>
                     </div>
                 </div>

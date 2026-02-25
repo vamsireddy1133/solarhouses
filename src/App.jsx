@@ -7,6 +7,7 @@ import Portfolio from './pages/Portfolio';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Quotation from './pages/Quotation';
+import ProtectedRoute from './components/ProtectedRoute';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -21,7 +22,14 @@ function App() {
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/quotation" element={<Quotation />} />
+            <Route
+              path="/quotation"
+              element={
+                <ProtectedRoute>
+                  <Quotation />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </AnimatePresence>
       </Layout>

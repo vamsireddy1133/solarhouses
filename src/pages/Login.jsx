@@ -13,6 +13,7 @@ const Login = () => {
         setError('');
 
         if (credentials.email === 'admin@solarhouses.in' && credentials.password === 'House@Solar') {
+            localStorage.setItem('isAuthenticated', 'true');
             navigate('/quotation');
         } else {
             setError('Invalid email or password. Please try again.');
