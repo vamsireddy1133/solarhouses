@@ -222,7 +222,7 @@ const Home = () => {
             </section>
 
             {/* How It Works */}
-            <section className="py-16 md:py-32 bg-brand-green-dark relative overflow-hidden">
+            <section className="pt-16 md:pt-32 pb-8 md:pb-12 bg-brand-green-dark relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-96 h-96 bg-brand-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-green-light/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
 
@@ -275,7 +275,7 @@ const Home = () => {
             </section>
 
 
-            {/* Solar Kits Section */}
+            {/* Solar Kits Section 
             <section className="py-16 md:py-32 bg-brand-green-dark relative overflow-hidden border-t border-white/5">
                 <div className="container-custom relative z-10">
                     <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
@@ -295,7 +295,7 @@ const Home = () => {
                                 id: 1,
                                 title: "Kit 1: Without Wires",
                                 desc: "Standard component bundle for custom wiring projects.",
-                                image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop",
+                                image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2070&auto=format&fit=crop",
                                 features: ["Tier-1 Mono Perc Panels", "Smart String Inverter", "AC/DC Distribution Box", "Earthing Rods & Gel"]
                             },
                             {
@@ -329,7 +329,6 @@ const Home = () => {
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0a110d] via-transparent to-transparent opacity-60" />
 
-                                        {/* Floating Badge */}
                                         <motion.div
                                             whileHover={{ rotate: 90, scale: 1.1 }}
                                             className="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white/40 group-hover:bg-brand-yellow group-hover:text-brand-green-dark group-hover:border-brand-yellow transition-all duration-500 cursor-pointer backdrop-blur-md"
@@ -383,9 +382,10 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+            */}
 
             {/* Market Growth Chart Section */}
-            <section className="py-16 md:py-32 bg-brand-green-dark relative overflow-hidden">
+            <section className="pt-8 md:pt-12 pb-16 md:pb-32 bg-brand-green-dark relative overflow-hidden">
                 <div className="container-custom relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-20">
                         <span className="text-brand-yellow font-black uppercase tracking-widest text-sm inline-block mb-4">Market Outlook</span>
@@ -851,8 +851,8 @@ const Home = () => {
                             <div className="space-y-4">
                                 <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 mt-12">
                                     <img
-                                        src="https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=1974&auto=format&fit=crop"
-                                        alt="Modern Solar Architecture"
+                                        src="https://images.unsplash.com/photo-1616680214084-226671e13f96?q=80&w=1970&auto=format&fit=crop"
+                                        alt="Indian Solar Professional"
                                         className="w-full h-full object-cover transition-all duration-700"
                                     />
                                 </div>
