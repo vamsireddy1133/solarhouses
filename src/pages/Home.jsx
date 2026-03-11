@@ -851,8 +851,8 @@ const Home = () => {
                             <div className="space-y-4">
                                 <div className="aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 mt-12">
                                     <img
-                                        src="https://images.unsplash.com/photo-1616680214084-226671e13f96?q=80&w=1970&auto=format&fit=crop"
-                                        alt="Indian Solar Professional"
+                                        src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=1970&auto=format&fit=crop"
+                                        alt="Indian Solar Professionals"
                                         className="w-full h-full object-cover transition-all duration-700"
                                     />
                                 </div>

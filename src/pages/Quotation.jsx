@@ -102,7 +102,7 @@ const Quotation = () => {
                 description: '10KW GRID CONNECTED SOLAR PV (NDCR) AS PER SCOPE DESIGNING, ENGINEERING, INSTALLATION & COMMISSIONING (EPC)',
                 qty: '1 PCS',
                 tax: '56,181.36 (18%)',
-                amount: '368300'
+                amount: '312118.64'
             }
         ],
         summary: {
@@ -139,45 +139,44 @@ const Quotation = () => {
     };
 
     useEffect(() => {
-        // Calculate taxable amount from sum of items
+        // 1. Calculate taxable amount from sum of items in the table
         const sumOfItems = quoteData.items.reduce((sum, item) => {
             const amt = parseFloat(item.amount.toString().replace(/,/g, '')) || 0;
             return sum + amt;
         }, 0);
 
-        // We'll update the taxableAmount in the summary if it differs from the sum
-        const currentTaxable = parseFloat(quoteData.summary.taxableAmount.replace(/,/g, '')) || 0;
+        // 2. Determine the base taxable amount
+        // We prioritize the sum of items. If empty, we use the manual taxableAmount field.
+        const currentTaxableField = parseFloat(quoteData.summary.taxableAmount.toString().replace(/,/g, '')) || 0;
+        let taxableBase = sumOfItems > 0 ? sumOfItems : currentTaxableField;
 
-        let taxable = sumOfItems > 0 ? sumOfItems : currentTaxable;
-
-        // Common calculation logic
+        // 3. Determine tax rates from labels (extract numbers like 9 from "CGST @9%")
         const cgstMatch = quoteData.summary.cgstLabel.match(/(\d+(\.\d+)?)/);
         const sgstMatch = quoteData.summary.sgstLabel.match(/(\d+(\.\d+)?)/);
         const cgstRate = cgstMatch ? parseFloat(cgstMatch[1]) : 0;
         const sgstRate = sgstMatch ? parseFloat(sgstMatch[1]) : 0;
 
-        const totalTaxRate = cgstRate + sgstRate;
-
-        // If taxable amount is inclusive of tax, we need to strip it out
-        // Based on the user's data: 3,68,300 total, 3,12,118.64 taxable. 
-        // 368300 / 1.18 = 312118.64. So it's tax inclusive.
-        const baseAmount = taxable / (1 + (totalTaxRate / 100));
-
-        const cgstVal = (baseAmount * cgstRate) / 100;
-        const sgstVal = (baseAmount * sgstRate) / 100;
-        const totalVal = baseAmount + cgstVal + sgstVal;
+        // 4. TAX EXCLUSIVE CALCULATION
+        // Total = Taxable + CGST (on taxable) + SGST (on taxable)
+        // This ensures that changing the GST % correctly updates the bottom line Total
+        const cgstVal = (taxableBase * cgstRate) / 100;
+        const sgstVal = (taxableBase * sgstRate) / 100;
+        const totalVal = taxableBase + cgstVal + sgstVal;
 
         const formatNum = (n) => n.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const newTaxable = formatNum(baseAmount);
+        const newTaxable = formatNum(taxableBase);
         const newCgst = formatNum(cgstVal);
         const newSgst = formatNum(sgstVal);
         const newTotalFormatted = Math.round(totalVal).toLocaleString('en-IN');
         const newWords = numberToWords(totalVal);
 
+        // 5. Update state only if values actually changed to avoid infinite loops
         if (quoteData.summary.taxableAmount !== newTaxable ||
             quoteData.summary.cgst !== newCgst ||
             quoteData.summary.sgst !== newSgst ||
+            quoteData.summary.total !== newTotalFormatted ||
             quoteData.summary.amountInWords !== newWords) {
+            
             setQuoteData(prev => ({
                 ...prev,
                 summary: {
@@ -190,7 +189,7 @@ const Quotation = () => {
                 }
             }));
         }
-    }, [quoteData.items, quoteData.summary.cgstLabel, quoteData.summary.sgstLabel]);
+    }, [quoteData.items, quoteData.summary.cgstLabel, quoteData.summary.sgstLabel, quoteData.summary.taxableAmount]);
 
     const handleDownload = () => {
         const element = document.getElementById('quotation-document');
@@ -212,7 +211,8 @@ const Quotation = () => {
                 logging: false,
                 letterRendering: true
             },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['css', 'legacy'] }
         };
 
         // Trigger direct download and restore visibility
@@ -400,8 +400,9 @@ const Quotation = () => {
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-10 pt-4" style={{ borderTop: '2px solid #000000' }}>
-                        <div className="space-y-4">
+                    <div className="quotation-footer-wrapper break-inside-avoid" style={{ borderTop: '2px solid #000000', marginTop: '20px' }}>
+                        <div className="flex flex-col md:grid md:grid-cols-2 gap-10 pt-4 quotation-footer-section">
+                        <div className="space-y-4 break-inside-avoid">
                             <div>
                                 <h4 className="text-[10px] font-black uppercase tracking-widest mb-2" style={{ color: '#9ca3af' }}>Bank Details</h4>
                                 <div className="text-[9px] space-y-1 font-medium">
@@ -429,40 +430,52 @@ const Quotation = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div className="text-right space-y-2 p-4 rounded-xl" style={{ backgroundColor: '#f9fafb' }}>
-                            <div className="flex justify-between items-center text-[9px] font-bold uppercase">
-                                <span style={{ color: '#9ca3af', letterSpacing: '0.05em' }}>Taxable Amt.</span>
-                                <span className="font-black italic underline underline-offset-2" style={{ color: '#000000', textDecorationColor: '#000000' }}>₹ <EditableField value={quoteData.summary.taxableAmount} onChange={(val) => updateField('summary', 'taxableAmount', val)} /></span>
-                            </div>
-                            <div className="flex justify-between items-center text-[9px] font-bold uppercase">
-                                <span className="flex items-center justify-end" style={{ color: '#9ca3af' }}>
-                                    <EditableField value={quoteData.summary.cgstLabel} onChange={(val) => updateField('summary', 'cgstLabel', val)} />
-                                </span>
-                                <span className="font-black" style={{ color: '#4b5563' }}>₹ {quoteData.summary.cgst}</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[9px] font-bold uppercase">
-                                <span className="flex items-center justify-end" style={{ color: '#9ca3af' }}>
-                                    <EditableField value={quoteData.summary.sgstLabel} onChange={(val) => updateField('summary', 'sgstLabel', val)} />
-                                </span>
-                                <span className="font-black" style={{ color: '#4b5563' }}>₹ {quoteData.summary.sgst}</span>
-                            </div>
-                            <div className="flex justify-between items-center text-lg font-black uppercase pt-3" style={{ borderTop: '1px solid #e5e7eb', color: '#000000' }}>
-                                <span className="text-xs" style={{ letterSpacing: '-0.02em' }}>TOTAL</span>
-                                <span className="text-2xl" style={{ letterSpacing: '-0.02em' }}>₹ {quoteData.summary.total}</span>
-                            </div>
-                            <div className="text-[9px] font-black uppercase italic pt-1 leading-tight" style={{ color: '#9ca3af' }}>
-                                ({quoteData.summary.amountInWords})
-                            </div>
-
-                            <div className="pt-8 flex justify-end">
-                                <div className="w-40 pt-2 text-[9px] font-black uppercase text-center" style={{ borderTop: '1px solid #000000', color: '#000000' }}>
-                                    Authorized Signatory
-                                </div>
-                            </div>
+                        <div className="text-right p-4 rounded-xl break-inside-avoid shadow-sm" style={{ backgroundColor: '#f9fafb', minWidth: '280px' }}>
+                            <table className="w-full">
+                                <tbody>
+                                    <tr className="text-[9px] font-bold uppercase">
+                                        <td className="text-left py-1" style={{ color: '#9ca3af', letterSpacing: '0.05em' }}>Taxable Amt.</td>
+                                        <td className="text-right py-1 font-black italic underline underline-offset-2" style={{ color: '#000000', textDecorationColor: '#000000' }}>
+                                            ₹ <EditableField value={quoteData.summary.taxableAmount} onChange={(val) => updateField('summary', 'taxableAmount', val)} />
+                                        </td>
+                                    </tr>
+                                    <tr className="text-[9px] font-bold uppercase">
+                                        <td className="text-left py-1" style={{ color: '#9ca3af' }}>
+                                            <EditableField value={quoteData.summary.cgstLabel} onChange={(val) => updateField('summary', 'cgstLabel', val)} />
+                                        </td>
+                                        <td className="text-right py-1 font-black" style={{ color: '#4b5563' }}>₹ {quoteData.summary.cgst}</td>
+                                    </tr>
+                                    <tr className="text-[9px] font-bold uppercase">
+                                        <td className="text-left py-1" style={{ color: '#9ca3af' }}>
+                                            <EditableField value={quoteData.summary.sgstLabel} onChange={(val) => updateField('summary', 'sgstLabel', val)} />
+                                        </td>
+                                        <td className="text-right py-1 font-black" style={{ color: '#4b5563' }}>₹ {quoteData.summary.sgst}</td>
+                                    </tr>
+                                    <tr style={{ borderTop: '1px solid #e5e7eb' }}>
+                                        <td className="text-left pt-3 text-xs font-black uppercase" style={{ color: '#000000', letterSpacing: '-0.02em' }}>TOTAL</td>
+                                        <td className="text-right pt-3 text-2xl font-black" style={{ color: '#000000', letterSpacing: '-0.02em' }}>₹ {quoteData.summary.total}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="2" className="text-right text-[9px] font-black uppercase italic pt-1 leading-tight" style={{ color: '#9ca3af' }}>
+                                            ({quoteData.summary.amountInWords})
+                                        </td>
+                                    </tr>
+                                    <tr className="break-inside-avoid">
+                                        <td colSpan="2" className="pt-8 break-inside-avoid">
+                                            <div className="flex justify-end break-inside-avoid">
+                                                <div className="w-40 pt-2 text-[9px] font-black uppercase text-center break-inside-avoid" style={{ borderTop: '1px solid #000000', color: '#000000' }}>
+                                                    Authorized Signatory
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
             <style dangerouslySetInnerHTML={{
                 __html: `
@@ -498,10 +511,48 @@ const Quotation = () => {
                         top: 0;
                         left: 0;
                     }
-                    /* Prevent extra pages */
-                    * {
+                    /* Specific container break prevention */
+                    .quotation-footer-wrapper {
+                        page-break-inside: avoid !important;
+                        break-inside: avoid-page !important;
+                        width: 100% !important;
+                        display: block !important;
+                        position: relative !important;
+                    }
+                    
+                    .quotation-footer-section {
+                        page-break-inside: avoid !important;
+                        break-inside: avoid-page !important;
+                        display: flex !important;
+                        flex-direction: row !important;
+                        align-items: flex-start !important;
+                        justify-content: space-between !important;
+                        width: 100% !important;
+                    }
+                    
+                    .quotation-footer-section > div {
+                        page-break-inside: avoid !important;
+                        break-inside: avoid-page !important;
+                        flex: 1 !important;
+                        max-width: 48% !important;
+                    }
+
+                    .break-inside-avoid {
+                        page-break-inside: avoid !important;
+                        break-inside: avoid-page !important;
+                        display: block !important;
+                    }
+
+                    /* Ensure tables don't split rows */
+                    table, tr, td {
                         page-break-inside: avoid !important;
                         break-inside: avoid !important;
+                    }
+                    
+                    /* Force the background to stay with the text */
+                    .rounded-xl {
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
                     }
                 }
             `}} />
