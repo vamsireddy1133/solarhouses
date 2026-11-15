@@ -8,42 +8,42 @@ const Portfolio = () => {
     const projects = [
         {
             title: "The Green Mansion",
-            location: "Gurugram, HR",
+            location: "Telangana",
             category: "Residential",
             image: "https://images.unsplash.com/photo-1548337138-e87d889cc369?q=80&w=1968&auto=format&fit=crop",
             capacity: "15kW"
         },
         {
             title: "Tech Plaza Industrial",
-            location: "Pune, MH",
+            location: "Andhra Pradesh",
             category: "Commercial",
             image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1975&auto=format&fit=crop",
             capacity: "250kW"
         },
         {
             title: "Skyline Apartments",
-            location: "Bengaluru, KA",
+            location: "Telangana",
             category: "Housing Society",
             image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop",
             capacity: "50kW"
         },
         {
             title: "Eco Warehouse",
-            location: "Ahmedabad, GJ",
+            location: "Andhra Pradesh",
             category: "Industrial",
             image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop",
             capacity: "1.2MW"
         },
         {
             title: "Royal Residency",
-            location: "Jaipur, RJ",
+            location: "Telangana",
             category: "Residential",
             image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2072&auto=format&fit=crop",
             capacity: "8kW"
         },
         {
             title: "Global Logistics Hub",
-            location: "Chennai, TN",
+            location: "Andhra Pradesh",
             category: "Industrial",
             image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop",
             capacity: "800kW"
