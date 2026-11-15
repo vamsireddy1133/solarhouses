@@ -4,9 +4,9 @@ import { Target, Users, Award, ShieldCheck } from 'lucide-react';
 const About = () => {
     const team = [
         {
-            name: "Sriram",
+            name: "Prahveenh",
             role: "CEO",
-            image: "/team/sriram.jpg",
+            image: "/team/prahveenh-ceo.jpg",
         },
         {
             name: "N Vani",
@@ -18,26 +18,21 @@ const About = () => {
             role: "Marketing Manager",
             image: "/team/madhusudhan.jpg",
         },
-        {
-            name: "Anil Kumar",
-            role: "Technical Team Head",
-            image: "/team/anil.jpg",
-        },
-        {
-            name: "Prahveenh",
-            role: "Marketing Team Head",
-            image: "/team/prahveenh.jpg",
-        },
+        // {
+        //     name: "Anil Kumar",
+        //     role: "Technical Team Head",
+        //     image: "/team/anil.jpg",
+        // },
         {
             name: "Kavitha",
             role: "Work Force Manager",
             image: "/team/kavitha.jpg",
         },
-        {
-            name: "Shiva",
-            role: "Business Development Manager",
-            image: "/team/shiva.jpg",
-        },
+        // {
+        //     name: "Shiva",
+        //     role: "Business Development Manager",
+        //     image: "/team/shiva.jpg",
+        // },
     ];
 
     return (
