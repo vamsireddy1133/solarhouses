@@ -1201,10 +1201,10 @@ const Home = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                     >
                         {[
-                            { title: "The Green Mansion", location: "Telangana", category: "Residential", image: "https://images.unsplash.com/photo-1624397640148-949b1732bb0a?q=80&w=1974&auto=format&fit=crop", capacity: "15kW" },
-                            { title: "Tech Plaza Industrial", location: "Andhra Pradesh", category: "Commercial", image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2072&auto=format&fit=crop", capacity: "250kW" },
-                            { title: "Skyline Apartments", location: "Telangana", category: "Housing Society", image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop", capacity: "50kW" },
-                            { title: "Eco Warehouse", location: "Andhra Pradesh", category: "Industrial", image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?q=80&w=2070&auto=format&fit=crop", capacity: "1.2MW" },
+                            { title: "The Green Mansion", location: "Telangana", category: "Residential", image: "/projects/project-1.jpg", capacity: "15kW" },
+                            { title: "Tech Plaza Industrial", location: "Andhra Pradesh", category: "Commercial", image: "/projects/project-2.jpg", capacity: "250kW" },
+                            { title: "Skyline Apartments", location: "Telangana", category: "Housing Society", image: "/projects/project-3.jpg", capacity: "50kW" },
+                            { title: "Eco Warehouse", location: "Andhra Pradesh", category: "Industrial", image: "/projects/project-4.jpg", capacity: "1.2MW" },
                             { title: "Royal Residency", location: "Telangana", category: "Residential", image: "https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=2058&auto=format&fit=crop", capacity: "8kW" },
                             { title: "Global Logistics Hub", location: "Andhra Pradesh", category: "Industrial", image: "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=2072&auto=format&fit=crop", capacity: "800kW" }
                         ].map((project, i) => (
