@@ -1098,10 +1098,10 @@ const Home = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                         {[
                             { name: "Prahveenh", role: "CEO", image: "/team/prahveenh-ceo.jpg" },
-                            { name: "N Vani", role: "Managing Director", image: "/team/vani.jpg" },
-                            { name: "Madhusudhan", role: "Marketing Manager", image: "/team/madhusudhan.jpg" },
+                            // { name: "N Vani", role: "Managing Director", image: "/team/vani.jpg" },
+                            // { name: "Madhusudhan", role: "Marketing Manager", image: "/team/madhusudhan.jpg" },
                             // { name: "Anil Kumar", role: "Technical Team Head", image: "/team/anil.jpg" },
-                            { name: "Kavitha", role: "Work Force Manager", image: "/team/kavitha.jpg" },
+                            // { name: "Kavitha", role: "Work Force Manager", image: "/team/kavitha.jpg" },
                             // { name: "Shiva", role: "Business Development Manager", image: "/team/shiva.jpg" },
                         ].map((member, i) => (
                             <motion.div
